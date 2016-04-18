@@ -3,13 +3,18 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="greedy" class="com.launchcode.greedy.Greedy">
         <property name="coinFactory" ref="coinFactory"></property>
     </bean>
-    <bean id="coinFactory" class="com.launchcode.greedy.CoinFactory"></bean>
-
+    <bean id="coinFactory" class="com.launchcode.greedy.CoinFactory">
+        <property name="currency" ref="usCurrency"></property>
+        <property name="changeString" value="$3.50"></property>
+    </bean>
+    <bean id="usCurrency" class="com.launchcode.greedy.currency.USCurrency"></bean>
 </beans>
