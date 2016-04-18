@@ -6,6 +6,7 @@ import com.launchcode.greedy.currency.USCurrency;
 public class CoinFactory
 {
     private static CurrencyFactory currency = null;
+    private static String changeString;
     public CurrencyFactory determainCurrencyTypeFromString(String change)
     {
         if(change.charAt(0) == '€')
@@ -21,6 +22,14 @@ public class CoinFactory
             return(null);
         }
     }
+    public void setCurrencyFactory(CurrencyFactory currencyFactory)
+    {
+        this.currency = currencyFactory;
+    }
+    public void setChangeString(String value)
+    {
+        this.changeString = value;
+    }
     public double convertChangeStringToDouble(String amountOfChange)
     {
         return(Double.parseDouble(amountOfChange.substring(1)));
@@ -29,17 +38,22 @@ public class CoinFactory
     {
         return ((int) (value * 100));
     }
-    public CurrencyFactory setCurrency(String change)
+    public int countCoins()
     {
-        if(currency == null)
-        {
-            currency = determainCurrencyTypeFromString(change);
-        }
-        return(currency);
+        int changeValue = convertDoubleToChangeValue(convertChangeStringToDouble(this.changeString));
+        return(countCoinsInChange(currency.getCoinValues(),changeValue));
     }
-    public int countCoins(String change)
+    public int countCoinsInChange(int[] coinValues, int change)
     {
-        int changeValue = convertDoubleToChangeValue(convertChangeStringToDouble(change));
-        return(currency.countCoinsInChange(changeValue));
+        int coinCount = 0;
+        for(int coinIndex = 0; coinIndex < coinValues.length; coinIndex++)
+        {
+            while(change >= coinValues[coinIndex])
+            {
+                change -= coinValues[coinIndex];
+                coinCount++;
+            }
+        }
+        return(coinCount);
     }
 }
