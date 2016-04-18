@@ -4,7 +4,7 @@ import com.launchcode.greedy.CoinFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-
+import java.lang.*;
 public class Greedy {
 
 
@@ -26,8 +26,7 @@ public class Greedy {
     }
     public void run(String varArg)
     {
-        coinFactory.setCurrency(varArg);
-        int coinCount = coinFactory.countCoins(varArg);
+        int coinCount = coinFactory.countCoins();
         System.out.print(coinCount);
     }
 }
